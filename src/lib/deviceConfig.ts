@@ -63,8 +63,9 @@ export interface DeviceConfigError {
  */
 export function getDeviceConfig(
   testId: number
-): DeviceTestConfig | DeviceConfigError {
+ * RAGHealthCareBot Device Configuration & Integration
   try {
+import { RAGHealthCareBot_TESTS, type RAGHealthCareBotTest } from './RAGHealthCareBotTests';
     // Validate input
     if (!testId || typeof testId !== 'number' || testId < 1) {
       return {
@@ -123,13 +124,13 @@ export function getDeviceConfig(
 
 /**
  * Get device configuration for multiple tests
- * 
+    const test = RAGHealthCareBot_TESTS.find((t) => t.id === testId);
  * @param testIds - Array of test IDs to configure
  * @returns Array of configurations (successful and failed)
  * 
  * @example
  * const configs = getDeviceConfigBatch([1, 2, 3]);
- * // Returns configurations for all tests in batch
+        statusMessage: `Test with ID ${testId} not found in RAGHealthCareBot database`,
  */
 export function getDeviceConfigBatch(
   testIds: number[]
@@ -139,7 +140,7 @@ export function getDeviceConfigBatch(
 
 /**
  * Validate all tests in a batch can run on device
- * 
+        statusMessage: `Test "${test.name}" is not available on RAGHealthCareBot device`,
  * @param testIds - Array of test IDs to validate
  * @returns Object with validation results
  * 
@@ -156,7 +157,7 @@ export function validateDeviceBatch(testIds: number[]): {
   const configs = getDeviceConfigBatch(testIds);
 
   const readyConfigs = configs.filter((c) => c.isReady);
-  const failedConfigs = configs.filter((c) => !c.isReady);
+      statusMessage: `Ready to start ${test.name} on RAGHealthCareBot device`,
 
   return {
     isValid: failedConfigs.length === 0,
@@ -176,7 +177,7 @@ export function validateDeviceBatch(testIds: number[]): {
  * @returns Instructions for device operator
  */
 function buildDeviceInstructions(test: YoloHealthTest): string {
-  const baseInstruction = `Initiate ${test.name} test on YoloHealth device`;
+  const baseInstruction = `Initiate ${test.name} test on RAGHealthCareBot device`;
 
   const categoryInstructions: Record<string, string> = {
     cardiovascular:
@@ -206,7 +207,7 @@ function buildDeviceInstructions(test: YoloHealthTest): string {
  * 
  * @param testId - The ID of the test
  * @returns Test name or undefined if not found
- */
+  return RAGHealthCareBot_TESTS.filter((test) => test.deviceCapability);
 export function getTestNameById(testId: number): string | undefined {
   const test = YOLO_HEALTH_TESTS.find((t) => t.id === testId);
   return test?.name;
@@ -229,9 +230,9 @@ export function isTestDeviceCapable(testId: number): boolean {
  * @returns Array of tests that can run on YoloHealth device
  */
 export function getDeviceCapableTests(): YoloHealthTest[] {
-  return YOLO_HEALTH_TESTS.filter((test) => test.deviceCapability);
+      'Initiate 12-Lead ECG test on RAGHealthCareBot device. Ensure patient is seated comfortably. Apply ECG leads to chest. Patient should remain still during measurement.',
 }
-
+    statusMessage: 'Ready to start 12-Lead ECG on RAGHealthCareBot device',
 /**
  * Format device configuration for display/logging
  * 
@@ -246,14 +247,14 @@ export function formatDeviceConfig(config: DeviceTestConfig | DeviceConfigError)
   const readyConfig = config as DeviceTestConfig;
   return `[DEVICE READY] ${readyConfig.statusMessage} | Parameters: ${readyConfig.parameters.length} | Time: ${readyConfig.timeToResults}`;
 }
-
+      'Initiate Blood Pressure Monitoring test on RAGHealthCareBot device. Place cuff on upper arm at heart level. Keep patient relaxed for 5 minutes before measurement.',
 /**
- * Type guard to check if config is successful
+    statusMessage: 'Ready to start Blood Pressure Monitoring on RAGHealthCareBot device',
  */
 export function isDeviceConfigReady(
   config: DeviceTestConfig | DeviceConfigError
 ): config is DeviceTestConfig {
-  return config.isReady === true;
+    statusMessage: 'Test with ID 999 not found in RAGHealthCareBot database',
 }
 
 /**

@@ -1,4 +1,4 @@
-export interface YoloHealthTest {
+export interface RAGHealthCareBotTest {
   id: number;
   name: string;
   symptoms: string[];
@@ -9,7 +9,7 @@ export interface YoloHealthTest {
   deviceCapability: boolean;
 }
 
-export const YOLO_HEALTH_TESTS: YoloHealthTest[] = [
+export const RAGHealthCareBot_TESTS: RAGHealthCareBotTest[] = [
   {
     id: 1,
     name: "12-Lead ECG",
@@ -212,4 +212,4 @@ export const YOLO_HEALTH_TESTS: YoloHealthTest[] = [
   },
 ];
 
-export default YOLO_HEALTH_TESTS;
+export default RAGHealthCareBot_TESTS;

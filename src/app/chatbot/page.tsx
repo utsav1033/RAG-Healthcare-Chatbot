@@ -4,7 +4,7 @@ import React from 'react';
 import { useRouter } from 'next/navigation';
 import { ROUTES, navigateToPage } from '@/lib/navigation';
 import { KioskLayout } from '@/components/kiosk';
-import { YoloHealthChatbot } from '@/components/YoloHealthChatbot';
+import { RAGHealthCareBotChatbot } from '@/components/RAGHealthCareBotChatbot';
 
 export default function ChatbotPage() {
   const router = useRouter();
@@ -38,9 +38,7 @@ export default function ChatbotPage() {
       onChatbotClick={handleChatbotClick}
     >
       {/* Chatbot Container - Full Height */}
-      <div className="flex-1 overflow-hidden w-full">
-        <YoloHealthChatbot />
-      </div>
+      <RAGHealthCareBotChatbot />
     </KioskLayout>
   );
 }

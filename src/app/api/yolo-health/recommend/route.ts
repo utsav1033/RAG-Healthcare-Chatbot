@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { YOLO_HEALTH_TESTS } from '@/lib/yoloHealthTests';
+import { RAGHealthCareBot_TESTS } from '@/lib/RAGHealthCareBotTests';
 import { GoogleGenerativeAI } from '@google/generative-ai';
 
 interface RecommendRequest {
@@ -34,7 +34,7 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
 
     const symptomText = symptoms.toLowerCase().trim();
 
-    const matchedTests = YOLO_HEALTH_TESTS.filter((test) => {
+    const matchedTests = RAGHealthCareBot_TESTS.filter((test) => {
       const testSymptoms = test.symptoms.map((s) => s.toLowerCase());
       return testSymptoms.some((symptom) =>
         symptomText.includes(symptom) || symptom.includes(symptomText)
@@ -63,17 +63,18 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
       })
       .join('\n');
 
-    const prompt = `You are a medical assistant for a YoloHealth diagnostic kiosk system. A patient has reported the following symptoms:
+    const prompt = `You are a medical assistant for a RAGHealthCareBot diagnostic kiosk system. A patient has reported the following symptoms:
 
 PATIENT SYMPTOMS: "${symptoms}"
 
-Based on the patient's symptoms, the following YoloHealth tests have been identified as potentially relevant:
+
+Based on the patient's symptoms, the following RAGHealthCareBot tests have been identified as potentially relevant:
 
 ${testsList || 'No direct matches found in the database.'}
 
 Please provide:
 
-1. DETAILED RECOMMENDATIONS: Based on the patient's symptoms and the available YoloHealth tests, provide a professional medical recommendation for which tests should be performed first. Explain why each recommended test is relevant to the symptoms. Consider the urgency of symptoms and standard medical protocols.
+1. DETAILED RECOMMENDATIONS: Based on the patient's symptoms and the available RAGHealthCareBot tests, provide a professional medical recommendation for which tests should be performed first. Explain why each recommended test is relevant to the symptoms. Consider the urgency of symptoms and standard medical protocols.
 
 2. NEXT STEPS: Provide clear, actionable next steps for the patient. Include:
    - Which tests to perform immediately
@@ -124,7 +125,7 @@ Important guidelines:
 
     return NextResponse.json(result, { status: 200 });
   } catch (error) {
-    console.error('Error in recommendation endpoint:', error);
+    console.error('Error in RAGHealthCareBot recommendation endpoint:', error);
 
     if (error instanceof SyntaxError) {
       return NextResponse.json(

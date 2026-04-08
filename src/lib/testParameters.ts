@@ -1,7 +1,7 @@
 /**
- * YoloHealth Test Parameters Database
+ * RAGHealthCareBot Test Parameters Database
  * 
- * Detailed information about all parameters measured by YoloHealth tests.
+ * Detailed information about all parameters measured by RAGHealthCareBot tests.
  * Includes normal ranges, explanations, and clinical significance.
  * Educational content for patients.
  */

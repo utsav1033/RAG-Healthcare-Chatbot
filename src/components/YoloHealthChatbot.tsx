@@ -1,3 +1,4 @@
+// This file has been deprecated and is no longer in use.
 'use client';
 
 import React, { useState, useRef, useEffect } from 'react';
@@ -70,7 +71,8 @@ const URGENCY_COLORS: Record<string, { bg: string; border: string; text: string 
   },
 };
 
-export const YoloHealthChatbot: React.FC = () => {
+// RENAME FILE TO RAGHealthCareBotChatbot.tsx
+export const RAGHealthCareBotChatbot: React.FC = () => {
   const [messages, setMessages] = useState<Message[]>([]);
   const [inputValue, setInputValue] = useState('');
   const [isLoading, setIsLoading] = useState(false);
@@ -400,7 +402,7 @@ export const YoloHealthChatbot: React.FC = () => {
               borderColor: THEME_COLORS.medicalBlueDark
             }}
           >
-            <h1 className="text-lg font-bold">YoloHealth</h1>
+            <h1 className="text-lg font-bold">RAGHealthCareBot</h1>
           </div>
 
           {/* Messages Container - Full Height */}
@@ -722,4 +724,4 @@ export const YoloHealthChatbot: React.FC = () => {
   );
 };
 
-export default YoloHealthChatbot;
+export default RAGHealthCareBotChatbot;

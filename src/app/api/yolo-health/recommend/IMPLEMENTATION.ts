@@ -1,8 +1,8 @@
 /**
- * YoloHealth Recommendation API
+* RAGHealthCareBot Recommendation API
  * 
  * This API endpoint provides intelligent health test recommendations based on patient symptoms.
- * It integrates with the YoloHealth test database and uses Google Gemini AI for smart analysis.
+* It integrates with the RAGHealthCareBot test database and uses Google Gemini AI for smart analysis.
  */
 
 // ============================================================================
@@ -47,7 +47,7 @@
  * Example 1: Basic symptom inquiry
  * 
  * Request:
- * POST /api/yolo-health/recommend
+* POST /api/raghealthcarebot/recommend
  * Content-Type: application/json
  * 
  * {
@@ -98,11 +98,11 @@
  *    src/
  *    ├── app/
  *    │   └── api/
- *    │       └── yolo-health/
+*    │       └── raghealthcarebot/
  *    │           └── recommend/
  *    │               └── route.ts          ← This file
  *    └── lib/
- *        └── yoloHealthTests.ts            ← Test database
+*    └── RAGHealthCareBotTests.ts      ← Test database
  */
 
 // ============================================================================

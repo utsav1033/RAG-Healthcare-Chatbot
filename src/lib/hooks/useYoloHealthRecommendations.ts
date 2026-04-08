@@ -1,5 +1,5 @@
 /**
- * useYoloHealthRecommendations - React Hook for YoloHealth Recommendations
+ * useRAGHealthCareBotRecommendations - React Hook for RAGHealthCareBot Recommendations
  * 
  * Provides a convenient interface for fetching health test recommendations
  * based on patient symptoms.
@@ -9,29 +9,29 @@
 
 import { useState, useCallback } from 'react';
 
-export interface MatchedTest {
+export interface RAGHealthCareBotMatchedTest {
   name: string;
   parameters: string[];
   timeToResults: string;
   category: string;
 }
 
-export interface RecommendationResponse {
+export interface RAGHealthCareBotRecommendationResponse {
   symptoms: string;
   matchedTests: MatchedTest[];
   recommendations: string;
   nextSteps: string;
 }
 
-interface UseYoloHealthRecommendationsReturn {
+interface UseRAGHealthCareBotRecommendationsReturn {
   loading: boolean;
   error: string | null;
-  data: RecommendationResponse | null;
+  data: RAGHealthCareBotRecommendationResponse | null;
   getRecommendations: (symptoms: string) => Promise<void>;
   reset: () => void;
 }
 
-export function useYoloHealthRecommendations(): UseYoloHealthRecommendationsReturn {
+export function useRAGHealthCareBotRecommendations(): UseRAGHealthCareBotRecommendationsReturn {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [data, setData] = useState<RecommendationResponse | null>(null);
@@ -47,7 +47,7 @@ export function useYoloHealthRecommendations(): UseYoloHealthRecommendationsRetu
     setData(null);
 
     try {
-      const response = await fetch('/api/yolo-health/recommend', {
+      const response = await fetch('/api/raghealthcarebot/recommend', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -62,7 +62,7 @@ export function useYoloHealthRecommendations(): UseYoloHealthRecommendationsRetu
         );
       }
 
-      const result: RecommendationResponse = await response.json();
+      const result: RAGHealthCareBotRecommendationResponse = await response.json();
       setData(result);
     } catch (err) {
       const errorMessage =

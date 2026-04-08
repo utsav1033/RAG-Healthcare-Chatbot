@@ -1,12 +1,12 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { YOLO_HEALTH_TESTS, YoloHealthTest } from '@/lib/yoloHealthTests';
+import { RAGHealthCareBot_TESTS, RAGHealthCareBotTest } from '@/lib/RAGHealthCareBotTests';
 import { ChatGoogleGenerativeAI } from '@langchain/google-genai';
 import { HumanMessage, SystemMessage } from '@langchain/core/messages';
 
 /**
- * API Route: /api/yolo-recommend
+ * API Route: /api/raghealthcarebot-recommend
  * 
- * Purpose: Uses Gemini API with LangChain to recommend YoloHealth tests
+ * Purpose: Uses Gemini API with LangChain to recommend RAGHealthCareBot tests
  * based on patient symptoms.
  * 
  * Input: symptoms (string or comma-separated list)
@@ -39,15 +39,15 @@ interface ErrorResponse {
 }
 
 /**
- * Search YoloHealth test database for tests matching symptoms
+ * Search RAGHealthCareBot test database for tests matching symptoms
  */
-function searchTestsBySymptoms(symptoms: string): YoloHealthTest[] {
+function searchTestsBySymptoms(symptoms: string): RAGHealthCareBotTest[] {
   const symptomText = symptoms.toLowerCase().trim();
   
   // Split symptoms by comma for multi-symptom input
   const symptomList = symptomText.split(',').map(s => s.trim());
   
-  const matchedTests = YOLO_HEALTH_TESTS.filter((test) => {
+  const matchedTests = RAGHealthCareBot_TESTS.filter((test) => {
     const testSymptoms = test.symptoms.map((s) => s.toLowerCase());
     
     // Match if any of the input symptoms match any test symptom
@@ -69,7 +69,7 @@ function searchTestsBySymptoms(symptoms: string): YoloHealthTest[] {
 /**
  * Format matched tests for the prompt
  */
-function formatTestsForPrompt(tests: YoloHealthTest[]): string {
+function formatTestsForPrompt(tests: RAGHealthCareBotTest[]): string {
   if (tests.length === 0) {
     return 'No direct matches found in the database, but general recommendations will be provided.';
   }
@@ -149,8 +149,8 @@ export async function POST(request: NextRequest): Promise<NextResponse<Recommend
     }
 
     // Prepare the system prompt
-    const systemPrompt = `You are a YoloHealth kiosk assistant. 
-Based on patient symptoms, recommend the most relevant tests from our available YoloHealth tests.
+    const systemPrompt = `You are a RAGHealthCareBot kiosk assistant. 
+  Based on patient symptoms, recommend the most relevant tests from our available RAGHealthCareBot tests.
 
 Important guidelines:
 - Provide specific, evidence-based recommendations
@@ -178,7 +178,7 @@ Return your response in the following JSON format:
     const testsInfo = formatTestsForPrompt(matchedTests);
     const userMessage = `Patient Symptoms: ${symptoms}
 
-Available YoloHealth Tests that may be relevant:
+Available RAGHealthCareBot Tests that may be relevant:
 ${testsInfo}
 
 Please recommend the most appropriate tests and provide relevant medical guidance.`;
@@ -288,7 +288,7 @@ Please recommend the most appropriate tests and provide relevant medical guidanc
 
     return NextResponse.json(result, { status: 200 });
   } catch (error) {
-    console.error('Error in yolo-recommend endpoint:', error);
+    console.error('Error in raghealthcarebot-recommend endpoint:', error);
 
     if (error instanceof SyntaxError) {
       return NextResponse.json(
@@ -321,7 +321,7 @@ Please recommend the most appropriate tests and provide relevant medical guidanc
 export async function GET(): Promise<NextResponse<{ message: string }>> {
   return NextResponse.json(
     {
-      message: 'YoloHealth Recommendation API. Use POST method with { "symptoms": "your symptoms" }',
+      message: 'RAGHealthCareBot Recommendation API. Use POST method with { "symptoms": "your symptoms" }',
     },
     { status: 200 }
   );

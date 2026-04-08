@@ -1,10 +1,10 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { YOLO_HEALTH_TESTS, YoloHealthTest } from '@/lib/yoloHealthTests';
+import { RAGHealthCareBot_TESTS, RAGHealthCareBotTest } from '@/lib/RAGHealthCareBotTests';
 import { ChatGoogleGenerativeAI } from '@langchain/google-genai';
 import { HumanMessage, SystemMessage } from '@langchain/core/messages';
 
 /**
- * API Route: /api/yolo-recommend-with-context
+ * API Route: /api/raghealthcarebot-recommend-with-context
  * 
  * Enhanced version that accepts conversation history and context
  * to provide better follow-up recommendations.
@@ -60,12 +60,12 @@ interface ErrorResponse {
 }
 
 /**
- * Search YoloHealth test database for tests matching symptoms
+ * Search RAGHealthCareBot test database for tests matching symptoms
  */
-function searchTestsBySymptoms(symptoms: string[]): YoloHealthTest[] {
+function searchTestsBySymptoms(symptoms: string[]): RAGHealthCareBotTest[] {
   if (symptoms.length === 0) return [];
 
-  const matchedTests = YOLO_HEALTH_TESTS.filter((test) => {
+  const matchedTests = RAGHealthCareBot_TESTS.filter((test) => {
     const testSymptoms = test.symptoms.map((s) => s.toLowerCase());
 
     return symptoms.some((inputSymptom) =>
@@ -87,7 +87,7 @@ function searchTestsBySymptoms(symptoms: string[]): YoloHealthTest[] {
 /**
  * Format matched tests for the prompt
  */
-function formatTestsForPrompt(tests: YoloHealthTest[]): string {
+function formatTestsForPrompt(tests: RAGHealthCareBotTest[]): string {
   if (tests.length === 0) {
     return 'No direct matches found in the database, but general recommendations will be provided.';
   }
@@ -204,7 +204,7 @@ export async function POST(
       : 'This is the INITIAL symptoms report from the patient.';
 
     // Prepare the system prompt with context awareness
-    const systemPrompt = `You are a YoloHealth kiosk assistant specializing in symptom analysis and test recommendations.
+    const systemPrompt = `You are a RAGHealthCareBot kiosk assistant specializing in symptom analysis and test recommendations.
 Your role is to help patients identify the most relevant medical tests based on their reported symptoms.
 
 CONTEXT MODE: ${contextIndicator}
@@ -250,7 +250,7 @@ All symptoms reported by patient: ${allSymptoms.join(', ')}
 
 Most recently added: ${symptoms}
 
-Available YoloHealth Tests that may be relevant:
+Available RAGHealthCareBot Tests that may be relevant:
 ${testsInfo}
 
 Please recommend the most appropriate tests considering the full symptom picture and provide relevant medical guidance.`;
@@ -378,7 +378,7 @@ Please recommend the most appropriate tests considering the full symptom picture
 
     return NextResponse.json(result, { status: 200 });
   } catch (error) {
-    console.error('Error in yolo-recommend-with-context endpoint:', error);
+    console.error('Error in raghealthcarebot-recommend-with-context endpoint:', error);
 
     if (error instanceof SyntaxError) {
       return NextResponse.json(
@@ -412,7 +412,7 @@ export async function GET(): Promise<NextResponse<{ message: string }>> {
   return NextResponse.json(
     {
       message:
-        'YoloHealth Recommendation API with Conversation Context. Use POST method with { "symptoms": "...", "accumulatedSymptoms": [...], "conversationHistory": [...] }',
+        'RAGHealthCareBot Recommendation API with Conversation Context. Use POST method with { "symptoms": "...", "accumulatedSymptoms": [...], "conversationHistory": [...] }',
     },
     { status: 200 }
   );
